@@ -1,7 +1,10 @@
 package ContractPackage;
 
 import java.time.LocalDate;
-
+enum Gender{
+  Male,
+  Female
+}
 public class Client {
 
     private int id;
@@ -9,11 +12,11 @@ public class Client {
     private String surname;
     private String patronymic;
     private LocalDate dateofBirth;
-    private char gender;
-    private int passportNum;
+    private Gender gender;
+    private int passportNum; 
     private int passportSerial;
 
-    public Client(int id, String name, String surname, String patronymic, LocalDate dateofBirth, char gender, int passportNum, int passportSerial) {
+    public Client(int id, String name, String surname, String patronymic, LocalDate dateofBirth, Gender gender, int passportNum, int passportSerial) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -44,11 +47,11 @@ public class Client {
         return dateofBirth;
     }
 
-    public char getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 

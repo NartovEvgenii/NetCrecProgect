@@ -14,29 +14,59 @@ public class ContractStore {
     }
 
     private void redactMas() {
-        int newLength =colContr + Math.min(colContr, 10000);
+        int newLength = colContr + Math.min(colContr, 10000);
         masContracts = Arrays.copyOf(masContracts, newLength);
-        colContr +=1;
     }
 
-    
     public void addContract(Contract contr) {
         if (masContracts.length <= colContr) {
             redactMas();
         }
-        masContracts[colContr]=contr;
-        colContr +=1;
+        masContracts[colContr] = contr;
+        colContr += 1;
     }
+
     public Contract getContract(int id) {
-        return masContracts[id];
-    }
-    public Contract getByIDContract(int id) {
-        for(int i=0;i<colContr){
-            
-        }{
-            
+        if (id < colContr) {
+            return masContracts[id];
         }
         return null;
+    }
+
+    public Contract getContractByID(int idcontr) {
+        for (int i = 0; i < colContr; i++) {
+            if (masContracts[i].getId() == idcontr) {
+                return masContracts[i];
+            }
+        }
+        return null;
+    }
+
+    public void deleteContract(int id) {
+        if (id < colContr) {
+            for (int i = id; i < colContr - 1; i++) {
+                masContracts[i] = masContracts[i + 1];
+            }
+            masContracts[colContr] = null;
+            colContr -=1;
+        }
+    }
+
+    public void deleteContractByID(int idcontr) {
+        boolean check = false;
+        for (int i = 0; i < colContr; i++) {
+            if (masContracts[i].getId() == idcontr) {
+                check = true;
+            }
+            if (check) {
+                if (i < colContr - 1) {
+                    masContracts[i] = masContracts[i + 1];
+                } else {
+                    masContracts[i] = null;
+                    colContr -=1;
+                }
+            }
+        }
     }
 
     public int getColCoctr() {

@@ -12,12 +12,19 @@ public class ContractStore {
         masContracts = new Contract[100];
         colContr = 0;
     }
-
+    
+    /**
+     * Array length extension method.
+     */
     private void redactMas() {
         int newLength = colContr + Math.min(colContr, 10000);
         masContracts = Arrays.copyOf(masContracts, newLength);
     }
-
+    
+    /**
+     * Method for adding a contract to an array.
+     * @param contr - contract to add
+     */
     public void addContract(Contract contr) {
         if (masContracts.length <= colContr) {
             redactMas();
@@ -25,7 +32,7 @@ public class ContractStore {
         masContracts[colContr] = contr;
         colContr += 1;
     }
-
+    
     public Contract getContract(int id) {
         if (id < colContr) {
             return masContracts[id];

@@ -1,7 +1,8 @@
 package ContractPackage;
 
+import java.time.LocalDate;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
 
 public class ContractStoreTest {
     
@@ -13,7 +14,8 @@ public class ContractStoreTest {
     @Test
     public void testAddContract() {
         System.out.println("addContract");
-        Contract contr = null;
+        Client cli = new Client(1,"Ivan","Ivanov","Ivanovich",LocalDate.of(1984, 7, 28),Gender.Male,1,1);
+        Contract contr = new CellularContract(1,LocalDate.of(2010, 7, 28),LocalDate.of(2040, 7, 28),cli,1,1,1);
         ContractStore instance = new ContractStore();
         instance.addContract(contr);
         // TODO review the generated test code and remove the default call to fail.
@@ -27,9 +29,12 @@ public class ContractStoreTest {
     public void testGetContract() {
         System.out.println("getContract");
         int id = 0;
-        ContractStore instance = new ContractStore();
-        Contract expResult = null;
+        ContractStore instance = new ContractStore();        
+        Client cli = new Client(1,"Ivan","Ivanov","Ivanovich",LocalDate.of(1984, 7, 28),Gender.Male,1,1);
+        Contract contr = new CellularContract(1,LocalDate.of(2010, 7, 28),LocalDate.of(2040, 7, 28),cli,1,1,1);
+        instance.addContract(contr);
         Contract result = instance.getContract(id);
+        assertEquals(contr, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
@@ -40,10 +45,13 @@ public class ContractStoreTest {
     @Test
     public void testGetContractByID() {
         System.out.println("getContractByID");
-        int idcontr = 0;
-        ContractStore instance = new ContractStore();
-        Contract expResult = null;
+        int idcontr = 1;
+        ContractStore instance = new ContractStore();        
+        Client cli = new Client(1,"Ivan","Ivanov","Ivanovich",LocalDate.of(1984, 7, 28),Gender.Male,1,1);
+        Contract contr = new CellularContract(1,LocalDate.of(2010, 7, 28),LocalDate.of(2040, 7, 28),cli,1,1,1);
+        instance.addContract(contr);
         Contract result = instance.getContractByID(idcontr);
+        assertEquals(contr, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
@@ -81,8 +89,12 @@ public class ContractStoreTest {
     public void testGetColCoctr() {
         System.out.println("getColCoctr");
         ContractStore instance = new ContractStore();
-        int expResult = 0;
+        int expResult = 1;
+        Client cli = new Client(1,"Ivan","Ivanov","Ivanovich",LocalDate.of(1984, 7, 28),Gender.Male,1,1);
+        Contract contr = new CellularContract(1,LocalDate.of(2010, 7, 28),LocalDate.of(2040, 7, 28),cli,1,1,1);
+        instance.addContract(contr);
         int result = instance.getColCoctr();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }

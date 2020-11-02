@@ -15,7 +15,7 @@ public class ContractStoreTest {
     public void testAddContract() {
         System.out.println("addContract");
         Client cli = new Client(1,"Ivan","Ivanov","Ivanovich",LocalDate.of(1984, 7, 28),Gender.Male,1,1);
-        Contract contr = new CellularContract(1,LocalDate.of(2010, 7, 28),LocalDate.of(2040, 7, 28),cli,1,1,1);
+        Contract contr = new CellularContract(1,LocalDate.of(2010, 7, 28),LocalDate.of(2040, 7, 28),1,cli,1,1,1);
         ContractStore instance = new ContractStore();
         instance.addContract(contr);
         // TODO review the generated test code and remove the default call to fail.
@@ -31,7 +31,7 @@ public class ContractStoreTest {
         int id = 0;
         ContractStore instance = new ContractStore();        
         Client cli = new Client(1,"Ivan","Ivanov","Ivanovich",LocalDate.of(1984, 7, 28),Gender.Male,1,1);
-        Contract contr = new CellularContract(1,LocalDate.of(2010, 7, 28),LocalDate.of(2040, 7, 28),cli,1,1,1);
+        Contract contr = new CellularContract(1,LocalDate.of(2010, 7, 28),LocalDate.of(2040, 7, 28),1,cli,1,1,1);
         instance.addContract(contr);
         Contract result = instance.getContract(id);
         assertEquals(contr, result);
@@ -48,7 +48,7 @@ public class ContractStoreTest {
         int idcontr = 1;
         ContractStore instance = new ContractStore();        
         Client cli = new Client(1,"Ivan","Ivanov","Ivanovich",LocalDate.of(1984, 7, 28),Gender.Male,1,1);
-        Contract contr = new CellularContract(1,LocalDate.of(2010, 7, 28),LocalDate.of(2040, 7, 28),cli,1,1,1);
+        Contract contr = new CellularContract(1,LocalDate.of(2010, 7, 28),LocalDate.of(2040, 7, 28),1,cli,1,1,1);
         instance.addContract(contr);
         Contract result = instance.getContractByID(idcontr);
         assertEquals(contr, result);
@@ -91,7 +91,7 @@ public class ContractStoreTest {
         ContractStore instance = new ContractStore();
         int expResult = 1;
         Client cli = new Client(1,"Ivan","Ivanov","Ivanovich",LocalDate.of(1984, 7, 28),Gender.Male,1,1);
-        Contract contr = new CellularContract(1,LocalDate.of(2010, 7, 28),LocalDate.of(2040, 7, 28),cli,1,1,1);
+        Contract contr = new CellularContract(1,LocalDate.of(2010, 7, 28),LocalDate.of(2040, 7, 28),1,cli,1,1,1);
         instance.addContract(contr);
         int result = instance.getColCoctr();
         assertEquals(expResult, result);

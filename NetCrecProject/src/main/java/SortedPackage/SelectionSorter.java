@@ -20,9 +20,9 @@ public class SelectionSorter implements ISorted {
                     min = j;
                 }
             }
-            Contract temp = masContracts[i];
-            masContracts[i] = masContracts[min];
-            masContracts[min] = temp;
+            Contract temp = masContracts[min];
+            masContracts[min] = masContracts[i];
+            masContracts[i] = temp;
         }
     }
 

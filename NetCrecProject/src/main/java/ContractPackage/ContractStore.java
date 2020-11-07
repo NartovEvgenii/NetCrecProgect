@@ -2,6 +2,7 @@ package ContractPackage;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 public class ContractStore {
 
@@ -18,7 +19,7 @@ public class ContractStore {
      */
     private void redactMas() {
         int newLength = colContr + Math.min(colContr, 10000);
-        masContracts = Arrays.copyOf(masContracts, newLength);
+        masContracts = Arrays.copyOf(getMasContracts(), newLength);
     }
 
     /**
@@ -27,7 +28,7 @@ public class ContractStore {
      * @param contr - contract to add
      */
     public void addContract(Contract contr) {
-        if (masContracts.length <= colContr) {
+        if (getMasContracts().length <= colContr) {
             redactMas();
         }
         masContracts[colContr] = contr;
@@ -42,7 +43,7 @@ public class ContractStore {
      */
     public Contract getContract(int id) {
         if (id < colContr) {
-            return masContracts[id];
+            return getMasContracts()[id];
         }
         return null;
     }
@@ -55,8 +56,8 @@ public class ContractStore {
      */
     public Contract getContractByID(int idcontr) {
         for (int i = 0; i < colContr; i++) {
-            if (masContracts[i].getId() == idcontr) {
-                return masContracts[i];
+            if (getMasContracts()[i].getId() == idcontr) {
+                return getMasContracts()[i];
             }
         }
         return null;
@@ -70,7 +71,7 @@ public class ContractStore {
     public void deleteContract(int id) {
         if (id < colContr) {
             for (int i = id; i < colContr - 1; i++) {
-                masContracts[i] = masContracts[i + 1];
+                masContracts[i] = getMasContracts()[i + 1];
             }
             masContracts[colContr] = null;
             colContr -= 1;
@@ -85,12 +86,12 @@ public class ContractStore {
     public void deleteContractByID(int idcontr) {
         boolean check = false;
         for (int i = 0; i < colContr; i++) {
-            if (masContracts[i].getId() == idcontr) {
+            if (getMasContracts()[i].getId() == idcontr) {
                 check = true;
             }
             if (check) {
                 if (i < colContr - 1) {
-                    masContracts[i] = masContracts[i + 1];
+                    masContracts[i] = getMasContracts()[i + 1];
                 } else {
                     masContracts[i] = null;
                     colContr -= 1;
@@ -101,10 +102,36 @@ public class ContractStore {
 
     /**
      * Method returns the number of contracts in the array.
+     *
      * @return - number of contracts
      */
     public int getColCoctr() {
         return colContr;
+    }
+
+    /**
+     * Returns an array of contracts
+     *
+     * @return - array of contracts
+     */
+    public Contract[] getMasContracts() {
+        return masContracts;
+    }
+
+    /**
+     * Rreturns an array of sorted items by parameter
+     *
+     * @param pred - contract sorting option
+     * @return - array of contracts
+     */
+    public Contract[] findBy(Predicate<Contract> pred) {
+        ContractStore result = new ContractStore();
+        for (int i = 0; i < colContr; i++) {
+            if (pred.test(masContracts[i])) {
+                result.addContract(masContracts[i]);
+            }
+        }
+        return result.getMasContracts();
     }
 
 }

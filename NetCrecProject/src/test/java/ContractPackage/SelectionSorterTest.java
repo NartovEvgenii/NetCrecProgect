@@ -1,6 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ContractPackage;
 
-import SortedPackage.BubbleSorter;
+import ContractPackage.Contract;
+import SortedPackage.SelectionSorter;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -11,13 +17,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class BubbleSorterTest {
+
+public class SelectionSorterTest {
 
     /**
-     * Test of sort method, of class BubbleSorter.
+     * Test of sort method, of class SelectionSorter.
      */
     @Test
-    public void testBubbleSort() {
+    public void testSelectionSort() {
         System.out.println("sort");
         ContractStore instance = new ContractStore();
         Client cli = new Client(1, "Ivan", "Ivanov", "Ivanovich", LocalDate.of(1984, 7, 28), Gender.Male, 1, 1);
@@ -27,7 +34,7 @@ public class BubbleSorterTest {
             instance.addContract(contr);
         }
         Arrays.sort(masIndex);
-        BubbleSorter sorted = new BubbleSorter();
+        SelectionSorter sorted = new SelectionSorter();
         Comparator<Contract> comp = (Contract o1, Contract o2) -> o1.getId() - o2.getId();
         sorted.sort(instance.getMasContracts(), comp);
         for (int i = 0; i < 4; i++) {
@@ -36,4 +43,5 @@ public class BubbleSorterTest {
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
+    
 }

@@ -115,10 +115,10 @@ public class ContractStoreTest {
             instance.addContract(contr);
         }
         Predicate<Contract> checkID = contr -> contr.getId() >= 10;
-        Contract[] mas = instance.findBy(checkID);
+        ContractStore mas = instance.findBy(checkID);
         for (int i = 0; i < 5; i++) {
-            if (mas[i] != null) {
-                assert (mas[i].getId() >= 10);
+            if (mas.getContract(i) != null) {
+                assert (mas.getContract(i).getId() >= 10);
             } else {
                 break;
             }

@@ -1,7 +1,10 @@
 package ContractPackage;
 
+import SortedPackage.ISorted;
+import SortedPackage.SelectionSorter;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 public class ContractStore {
@@ -122,16 +125,25 @@ public class ContractStore {
      * Rreturns an array of sorted items by parameter
      *
      * @param pred - contract sorting option
-     * @return - array of contracts
+     * @return - store of contracts
      */
-    public Contract[] findBy(Predicate<Contract> pred) {
+    public ContractStore findBy(Predicate<Contract> pred) {
         ContractStore result = new ContractStore();
         for (int i = 0; i < colContr; i++) {
             if (pred.test(masContracts[i])) {
                 result.addContract(masContracts[i]);
             }
         }
-        return result.getMasContracts();
+        return result;
+    }
+    
+    /**
+     * Method sorts the array of contracts by criterion
+     * @param comp - comparator sort criterion
+     */
+    public void sortBy(Comparator<Contract> comp){
+        ISorted metSort = new SelectionSorter();
+        metSort.sort(masContracts, comp);
     }
 
 }

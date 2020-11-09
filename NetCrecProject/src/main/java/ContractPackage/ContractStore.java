@@ -11,6 +11,7 @@ public class ContractStore {
 
     private Contract[] masContracts;
     private int colContr;
+    ISorted metSort = new SelectionSorter();
 
     public ContractStore() {
         masContracts = new Contract[100];
@@ -141,8 +142,7 @@ public class ContractStore {
      * Method sorts the array of contracts by criterion
      * @param comp - comparator sort criterion
      */
-    public void sortBy(Comparator<Contract> comp){
-        ISorted metSort = new SelectionSorter();
+    public void sortBy(Comparator<Contract> comp){        
         metSort.sort(masContracts, comp);
     }
 

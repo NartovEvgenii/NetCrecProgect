@@ -130,16 +130,14 @@ public class ContractStoreTest {
     }
 
     /**
-     * Test of findBy method, of class ContractStore.
+     * Test of addContractsFromCSV method, of class ContractStore.
      */
     @Test
     public void testaddContractsFromCSV() throws IOException, CsvValidationException {
         System.out.println("testaddContractsFromCSV");
         ContractStore instance = new ContractStore();
         String csvFile = "./src/main/resources/ContractFile.csv";
-        instance.addContractsFromCSV(csvFile);
-        int y = instance.getColCoctr();
-        
+        instance.addContractsFromCSV(csvFile);        
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }

@@ -149,6 +149,12 @@ public class ContractStore {
         metSort.sort(masContracts, comp);
     }
     
+    /**
+     * Method add contacts from csv file
+     * @param fileName - path to used file
+     * @throws java.io.IOException
+     * @throws com.opencsv.exceptions.CsvValidationException
+     */
     public void addContractsFromCSV(String fileName) throws IOException, CsvValidationException{
         readerCSV.loadDataToStore(fileName, this); 
     }

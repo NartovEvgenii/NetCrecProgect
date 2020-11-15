@@ -13,6 +13,14 @@ import java.util.List;
 
 public class ContactCSVReader {
 
+    /**
+     * Method adds contacts from the csv file to the contracts store
+     *
+     * @param fileName - path to used file
+     * @param contrStore - used contract storage
+     * @throws java.io.IOException
+     * @throws com.opencsv.exceptions.CsvValidationException
+     */
     public void loadDataToStore(String fileName, ContractStore contrStore) throws IOException, CsvValidationException {
         try (
                 Reader reader = Files.newBufferedReader(Paths.get(fileName));
@@ -25,54 +33,68 @@ public class ContactCSVReader {
                 LocalDate endDate = getDateOfString(nextRow[2]);
                 int numb_contr = Integer.parseInt(nextRow[3]);
                 Client cli = getClientOfString(nextRow);
-                contrStore.addContract(builtContract(nextRow,id,startDate,endDate,numb_contr,cli));
+                contrStore.addContract(builtContract(nextRow, id, startDate, endDate, numb_contr, cli));
             }
         }
 
     }
 
+    /**
+     * Method adds contacts from the csv file to the contracts store
+     *
+     * @param str - date string
+     * @return - date
+     */
     private LocalDate getDateOfString(String str) {
         String[] substr = str.split("\\.");
         return LocalDate.of(Integer.parseInt(substr[2]), Integer.parseInt(substr[1]), Integer.parseInt(substr[0]));
     }
 
-    private Gender getGenderOfString(String str) {
-        if (str.equals("Male")) {
-            return Gender.Male;
-        } else if (str.equals("Female")) {
-            return Gender.Female;
-        }
-        return null;
-    }
-
+    /**
+     * Method creates a client from an array of strings from the csv file starting at index 4
+     *
+     * @param nextRow - comparator sort criterion
+     * @return - client of the contract
+     */
     private Client getClientOfString(String[] nextRow) {
         int id = Integer.parseInt(nextRow[4]);
         String name = nextRow[5];
         String surname = nextRow[6];
         String patronymic = nextRow[7];
         LocalDate dateofBirth = getDateOfString(nextRow[8]);
-        Gender gender = getGenderOfString(nextRow[9]);
+        Gender gender = Gender.valueOf(nextRow[9]);
         int passportNum = Integer.parseInt(nextRow[10]);
         int passportSerial = Integer.parseInt(nextRow[11]);
         return new Client(id, name, surname, patronymic, dateofBirth, gender, passportNum, passportSerial);
     }
 
+    /**
+     * Method collects the contract from the input data and the rest of the csv file
+     *
+     * @param nextRow - the rest of the csv file 
+     * @param id - ID of the contract
+     * @param startDate - start date of the contract
+     * @param endDate - end date of the contract
+     * @param numberContract - number of the contract
+     * @param client - client of the contract
+     * @return - contract
+     */
     private Contract builtContract(String[] nextRow, int id, LocalDate startDate, LocalDate endDate, int numberContract, Client client) {
         switch (nextRow[12]) {
             case "Cellular":
-                String[] dop_info = nextRow[13].split("\\s");                
+                String[] dop_info = nextRow[13].split("\\s");
                 int colMinutes = Integer.parseInt(dop_info[0]);
                 int colGigabytes = Integer.parseInt(dop_info[1]);
                 int colSms = Integer.parseInt(dop_info[2]);
-                return new CellularContract(id,startDate,endDate,numberContract,client,colMinutes,colGigabytes,colSms);                
+                return new CellularContract(id, startDate, endDate, numberContract, client, colMinutes, colGigabytes, colSms);
             case "Internet":
                 double maxSpeed = Double.parseDouble(nextRow[13]);
-                return new InternetContract(id,startDate,endDate,numberContract,client,maxSpeed);
+                return new InternetContract(id, startDate, endDate, numberContract, client, maxSpeed);
             case "DijitalTV":
                 String[] listContr = nextRow[13].split("\\;");
                 List<String> channelPackage = new ArrayList();
                 channelPackage.addAll(Arrays.asList(listContr));
-                return new DijitalTVContract(id,startDate,endDate,numberContract,client,channelPackage);
+                return new DijitalTVContract(id, startDate, endDate, numberContract, client, channelPackage);
             default:
                 break;
         }

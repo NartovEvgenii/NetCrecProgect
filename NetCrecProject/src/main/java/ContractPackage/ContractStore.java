@@ -2,6 +2,8 @@ package ContractPackage;
 
 import SortedPackage.ISorted;
 import SortedPackage.SelectionSorter;
+import com.opencsv.exceptions.CsvValidationException;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -12,6 +14,7 @@ public class ContractStore {
     private Contract[] masContracts;
     private int colContr;
     ISorted metSort = new SelectionSorter();
+    ContactCSVReader readerCSV = new ContactCSVReader();
 
     public ContractStore() {
         masContracts = new Contract[100];
@@ -144,6 +147,10 @@ public class ContractStore {
      */
     public void sortBy(Comparator<Contract> comp){        
         metSort.sort(masContracts, comp);
+    }
+    
+    public void addContractsFromCSV(String fileName) throws IOException, CsvValidationException{
+        readerCSV.loadDataToStore(fileName, this); 
     }
 
 }

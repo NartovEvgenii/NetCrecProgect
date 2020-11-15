@@ -25,14 +25,14 @@ public class ContactCSVReader {
                 LocalDate endDate = getDateOfString(nextRow[2]);
                 int numb_contr = Integer.parseInt(nextRow[3]);
                 Client cli = getClientOfString(nextRow);
-                contrStore.addContract(builtContract(nextRow,id,startDate,endDate,numb_contr,cli)); 
+                contrStore.addContract(builtContract(nextRow,id,startDate,endDate,numb_contr,cli));
             }
         }
 
     }
 
     private LocalDate getDateOfString(String str) {
-        String[] substr = str.split("//.*");
+        String[] substr = str.split("\\.");
         return LocalDate.of(Integer.parseInt(substr[2]), Integer.parseInt(substr[1]), Integer.parseInt(substr[0]));
     }
 
@@ -60,7 +60,7 @@ public class ContactCSVReader {
     private Contract builtContract(String[] nextRow, int id, LocalDate startDate, LocalDate endDate, int numberContract, Client client) {
         switch (nextRow[12]) {
             case "Cellular":
-                String[] dop_info = nextRow[13].split("//s*");
+                String[] dop_info = nextRow[13].split("\\s");                
                 int colMinutes = Integer.parseInt(dop_info[0]);
                 int colGigabytes = Integer.parseInt(dop_info[1]);
                 int colSms = Integer.parseInt(dop_info[2]);
@@ -69,7 +69,7 @@ public class ContactCSVReader {
                 double maxSpeed = Double.parseDouble(nextRow[13]);
                 return new InternetContract(id,startDate,endDate,numberContract,client,maxSpeed);
             case "DijitalTV":
-                String[] listContr = nextRow[13].split("//,*");
+                String[] listContr = nextRow[13].split("\\;");
                 List<String> channelPackage = new ArrayList();
                 channelPackage.addAll(Arrays.asList(listContr));
                 return new DijitalTVContract(id,startDate,endDate,numberContract,client,channelPackage);

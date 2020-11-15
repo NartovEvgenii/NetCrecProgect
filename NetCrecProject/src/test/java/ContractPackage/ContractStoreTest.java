@@ -1,5 +1,7 @@
 package ContractPackage;
 
+import com.opencsv.exceptions.CsvValidationException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.function.Predicate;
 import static org.junit.Assert.assertEquals;
@@ -106,7 +108,7 @@ public class ContractStoreTest {
      */
     @Test
     public void testfindBy() {
-        System.out.println("getColCoctr");
+        System.out.println("testfindBy");
         ContractStore instance = new ContractStore();
         Client cli = new Client(1, "Ivan", "Ivanov", "Ivanovich", LocalDate.of(1984, 7, 28), Gender.Male, 1, 1);
         int[] masIndex = new int[]{10, 11, 3, 22, 4};
@@ -127,4 +129,18 @@ public class ContractStoreTest {
         //fail("The test case is a prototype.");
     }
 
+    /**
+     * Test of findBy method, of class ContractStore.
+     */
+    @Test
+    public void testaddContractsFromCSV() throws IOException, CsvValidationException {
+        System.out.println("testaddContractsFromCSV");
+        ContractStore instance = new ContractStore();
+        String csvFile = "./src/main/resources/ContractFile.csv";
+        instance.addContractsFromCSV(csvFile);
+        int y = instance.getColCoctr();
+        
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
 }

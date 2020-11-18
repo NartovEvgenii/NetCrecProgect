@@ -32,7 +32,7 @@ public class ContactCSVReader {
                 LocalDate startDate = getDateOfString(nextRow[1]);
                 LocalDate endDate = getDateOfString(nextRow[2]);
                 int numb_contr = Integer.parseInt(nextRow[3]);
-                Client cli = getClientOfString(nextRow);
+                Client cli = getClientOfString(nextRow,contrStore);
                 contrStore.addContract(builtContract(nextRow, id, startDate, endDate, numb_contr, cli));
             }
         }
@@ -51,13 +51,19 @@ public class ContactCSVReader {
     }
 
     /**
-     * Method creates a client from an array of strings from the csv file starting at index 4
+     * Method finds or creates a client to add to the contract from an array of strings
+     * from the csv file starting at index 4
      *
      * @param nextRow - comparator sort criterion
      * @return - client of the contract
      */
-    private Client getClientOfString(String[] nextRow) {
+    private Client getClientOfString(String[] nextRow,ContractStore contrStore) {
         int id = Integer.parseInt(nextRow[4]);
+        for (int i = 0; i < contrStore.getColCoctr(); i++) {
+            if (contrStore.getContract(i).getClient().getId() == id) {
+                return contrStore.getContract(i).getClient();
+            }
+        }
         String name = nextRow[5];
         String surname = nextRow[6];
         String patronymic = nextRow[7];

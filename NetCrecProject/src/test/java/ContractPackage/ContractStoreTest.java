@@ -2,8 +2,12 @@ package ContractPackage;
 
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Parameter;
 import java.time.LocalDate;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -140,5 +144,5 @@ public class ContractStoreTest {
         instance.addContractsFromCSV(csvFile);        
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
-    }
+    }    
 }

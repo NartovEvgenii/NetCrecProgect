@@ -35,6 +35,7 @@ public class ContractStore {
      * @param contr - contract to add
      */
     public void addContract(Contract contr) {
+        if(contr == null)return;
         if (getMasContracts().length <= colContr) {
             redactMas();
         }

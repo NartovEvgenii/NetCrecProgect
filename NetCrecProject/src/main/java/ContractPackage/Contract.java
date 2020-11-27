@@ -91,4 +91,5 @@ public class Contract {
     public void setNumberContract(int numberContract) {
         this.numberContract = numberContract;
     }
+
 }

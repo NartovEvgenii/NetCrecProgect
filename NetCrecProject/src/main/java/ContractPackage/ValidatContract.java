@@ -6,14 +6,14 @@ import java.util.logging.Logger;
 
 public class ValidatContract {
 
-    enum CheckStatus {
+    public enum CheckStatus {
         OK,
         Error,
         RedRisk
     }
 
-    public String errorMessage = "";
-    public CheckStatus status = CheckStatus.OK;
+    private String errorMessage = "";
+    private CheckStatus status = CheckStatus.OK;
 
     public ValidatContract contractValidate(String[] data) throws ClassNotFoundException {
         if (data.length >= 12) {
@@ -25,26 +25,28 @@ public class ValidatContract {
                     String value = data[i];
                     if (!checkTypeForField(value, fld)) {
                         status = CheckStatus.RedRisk;
-                        errorMessage = "element in array with index" + i
-                                + "does not match contract field with name" + fld.getName()
-                                + "with type" + fld.getType().getTypeName();
+                        errorMessage = "element in array with index " + i
+                                + " and the value " + data[4 + i] 
+                                + " does not match contract field with name " + fld.getName()
+                                + " with type " + fld.getType().getTypeName();
                         return this;
                     }
                 }
                 Class client = Class.forName("ContractPackage.Client");
                 String[] nameClientFields = {"id", "name", "surname", "patronymic", "dateofBirth", "gender", "passportNum", "passportSerial"};
                 for (int i = 0; i < nameClientFields.length; i++) {
-                    Field fld = client.getDeclaredField(nameContractFields[i]);
+                    Field fld = client.getDeclaredField(nameClientFields[i]);
                     String value = data[4 + i];
                     if (!checkTypeForField(value, fld)) {
                         status = CheckStatus.RedRisk;
-                        errorMessage = "element in array with index" + (4 + i)
-                                + "does not match client field with name" + fld.getName()
-                                + "with type" + fld.getType().getTypeName();
+                        errorMessage = "element in array with index " + (4 + i)
+                                + " and the value " + data[4 + i] 
+                                + " does not match client field with name " + fld.getName()
+                                + " with type " + fld.getType().getTypeName();
                         return this;
                     }
                 }
-                if (data.length == 14 && data[12].isEmpty() && data[13].isEmpty()) {
+                if (data.length == 14 && !data[12].isEmpty() && !data[13].isEmpty()) {
                     switch (data[12]) {
                         case "Cellular":
                             String[] dop_info = data[13].split("\\s");
@@ -85,7 +87,7 @@ public class ValidatContract {
 
     private void checkClassFieldTypes(Class cls, String[] nameField, String[] dop_inf) {
         try {
-            if (nameField.length <= dop_inf.length) {
+            if (nameField.length > dop_inf.length) {
                 status = CheckStatus.Error;
                 errorMessage = "entered the array allows you to create a contract of the base type "
                         + "but there is not enough additional information to create a contract subtype";
@@ -97,10 +99,10 @@ public class ValidatContract {
                 if (!checkTypeForField(value, fld)) {
                     status = CheckStatus.Error;
                     errorMessage = "entered the array allows you to create a contract of the base type "
-                            + "but additional information field element" + dop_inf[i]
-                            + "does not match field name" + fld.getName()
-                            + "with type" + fld.getType().getTypeName()
-                            + "in the class" + cls.getName();
+                            + "but additional information field element " + dop_inf[i]
+                            + "does not match field name " + fld.getName()
+                            + "with type " + fld.getType().getTypeName()
+                            + "in the class " + cls.getName();
                     return;
                 }
             }
@@ -122,6 +124,7 @@ public class ValidatContract {
             case "java.lang.String":
                 return true;
             case "ContractPackage.Gender":
+                return isGender(value);
             default:
                 break;
         }
@@ -157,6 +160,14 @@ public class ValidatContract {
             }
         }
         return false;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public CheckStatus getStatus() {
+        return status;
     }
 
 }

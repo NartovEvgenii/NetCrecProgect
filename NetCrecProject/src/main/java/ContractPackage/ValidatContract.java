@@ -15,6 +15,13 @@ public class ValidatContract {
     private String errorMessage = "";
     private CheckStatus status = CheckStatus.OK;
 
+    /**
+     * The method checks the incoming array for contract creation.
+     *
+     * @param data - data array for validation
+     * @return - a class method containing validation status and error message
+     * @throws java.lang.ClassNotFoundException
+     */
     public ValidatContract contractValidate(String[] data) throws ClassNotFoundException {
         if (data.length >= 12) {
             try {
@@ -65,7 +72,7 @@ public class ValidatContract {
                         default:
                             status = CheckStatus.Error;
                             errorMessage = "entered the array allows you to create a contract of the base type "
-                            + "but does not have enough fields to expand it";
+                            + "but does not have enough fields to expand it or cannot find class type named " + data[12];
                             return this;
                     }
                 } else {
@@ -85,6 +92,13 @@ public class ValidatContract {
         return this;
     }
 
+    /**
+     * The method checks the subclass fields and additional information fields for data type compliance.
+     *
+     * @param cls - class type to check
+     * @param nameField - an array of class field names to check
+     * @param dop_inf - an array of additional information to check
+     */
     private void checkClassFieldTypes(Class cls, String[] nameField, String[] dop_inf) {
         try {
             if (nameField.length > dop_inf.length) {
@@ -113,6 +127,13 @@ public class ValidatContract {
         }
     }
 
+    /**
+     * The method checks if the field type matches and converts the input string.
+     *
+     * @param value - string value to check for type
+     * @param fld - type check field
+     * @return - check value
+     */
     public static boolean checkTypeForField(String value, Field fld) {
         switch (fld.getType().getTypeName()) {
             case "int":
@@ -131,6 +152,12 @@ public class ValidatContract {
         return false;
     }
 
+    /**
+     * The method checks if a string can be converted to an integer.
+     *
+     * @param number - string to check the format
+     * @return - check value
+     */
     public static boolean isInteger(String number) {
         try {
             int d = Integer.parseInt(number);
@@ -140,6 +167,12 @@ public class ValidatContract {
         return true;
     }
 
+    /**
+     * The method checks if a string can be converted to an Double.
+     *
+     * @param number - string to check the format
+     * @return - check value
+     */
     public static boolean isDouble(String number) {
         try {
             double d = Double.parseDouble(number);
@@ -149,10 +182,22 @@ public class ValidatContract {
         return true;
     }
 
+    /**
+     * The method checks the possibility of converting a string to a date using a template:dd.mm.yyyy
+     *
+     * @param date - string to check the format
+     * @return - check value
+     */
     public static boolean isLocalDate(String date) {
         return date.matches("^(0?[1-9]|[12][0-9]|3[01])\\.(0?[1-9]|1[012])\\.((19|20)\\d\\d)$");
     }
 
+    /**
+     * The method checks if the string can be converted to the client's gender type
+     *
+     * @param gender - string to check the format
+     * @return - check value
+     */
     public static boolean isGender(String gender) {
         for (Gender gend : Gender.values()) {
             if (gend.name().equals(gender)) {
@@ -162,10 +207,20 @@ public class ValidatContract {
         return false;
     }
 
+    /**
+     * The method returns a validation error message
+     *
+     * @return - a validation error message
+     */
     public String getErrorMessage() {
         return errorMessage;
     }
 
+    /**
+     * The method returns the status of the validation check
+     *
+     * @return - the status of the validation check
+     */
     public CheckStatus getStatus() {
         return status;
     }

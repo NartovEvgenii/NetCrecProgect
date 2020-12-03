@@ -5,6 +5,13 @@ import validators.Message.CheckStatus;
 
 public class PassportClientValidator implements Validator {
 
+    /**
+     * Method checks the data of the client's passport for correctness.
+     * Passport series must contain 4 characters, passport number must contain 6.
+     *
+     * @param contr - contract with the client 
+     * @return - verification result message with verification status and error message
+     */
     @Override
     public Message validate(Contract contr) {
         String err = "";

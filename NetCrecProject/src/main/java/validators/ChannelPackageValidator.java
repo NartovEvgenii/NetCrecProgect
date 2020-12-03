@@ -9,6 +9,12 @@ import java.util.logging.Logger;
 
 public class ChannelPackageValidator implements Validator {
 
+    /**
+     * Method checks the channel package of the DijitalTVContract for more than 1 channel.
+     *
+     * @param contr - verifiable contract
+     * @return - verification result message with verification status and error message
+     */
     @Override
     public Message validate(Contract contr) {
         try {

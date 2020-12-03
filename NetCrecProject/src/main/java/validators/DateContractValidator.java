@@ -5,6 +5,12 @@ import validators.Message.CheckStatus;
 
 public class DateContractValidator implements Validator {
     
+    /**
+     * Method to check the creation date of the contract was before the date of its completion.
+     *
+     * @param contr - verifiable contract 
+     * @return - verification result message with verification status and error message
+     */
     @Override
     public Message validate(Contract contr) {
         return(contr.getStartDate().isBefore(contr.getEndDate()))?

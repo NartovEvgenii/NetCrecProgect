@@ -5,6 +5,12 @@ import validators.Message.CheckStatus;
 
 public class NumberContractValidator implements Validator{
 
+    /**
+     * Method checks the contract number for correctness.
+     *
+     * @param contr - verifiable contract 
+     * @return - verification result message with verification status and error message
+     */
     @Override
     public Message validate(Contract contr) {
         return(contr.getNumberContract() >= 0)?

@@ -10,6 +10,9 @@ import validators.Message;
 
 public class ValidatorTest {
     
+    /**
+     * Test of validate method, of class ContractValidator.
+     */
     @Test
     public void testContractValidator() throws IOException, CsvValidationException {        
         Client cli = new Client(1, "Ivan", "Ivanov", "Ivanovich", LocalDate.of(1984, 7, 28), Gender.Male, 1, 1);

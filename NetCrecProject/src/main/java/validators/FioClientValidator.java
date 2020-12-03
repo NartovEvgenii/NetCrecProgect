@@ -4,6 +4,12 @@ import ContractPackage.Contract;
 
 public class FioClientValidator implements Validator {
 
+    /**
+     * Method checks for uppercase name, surname and patronymic of the client of the contract.
+     *
+     * @param contr - contract with the client 
+     * @return - verification result message with verification status and error message
+     */
     @Override
     public Message validate(Contract contr) {
         String err = "";

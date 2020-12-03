@@ -10,6 +10,12 @@ import validators.Message.CheckStatus;
 
 public class MaxSpeedInternetValidator implements Validator {
 
+    /**
+     * Method checks the maximum Internet speed of the InternetContract for correctness.
+     *
+     * @param contr - verifiable contract
+     * @return - verification result message with verification status and error message
+     */
     @Override
     public Message validate(Contract contr) {
         try {

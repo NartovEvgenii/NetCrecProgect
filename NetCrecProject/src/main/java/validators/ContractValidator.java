@@ -18,6 +18,12 @@ public class ContractValidator implements Validator {
         validators.add(new ChannelPackageValidator());              
     }
 
+    /**
+     * Method checks the contract for data correctness.
+     *
+     * @param contr - verifiable contract 
+     * @return - verification result message with verification status and error message
+     */
     @Override
     public Message validate(Contract contr) {
         Message res = new Message(Message.CheckStatus.OK,"");

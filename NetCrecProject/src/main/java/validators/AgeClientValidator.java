@@ -6,6 +6,12 @@ import validators.Message.CheckStatus;
 
 public class AgeClientValidator implements Validator  {
 
+    /**
+     * Method checks the age of the client of the contract for majority.
+     *
+     * @param contr - contract with the client 
+     * @return - verification result message with verification status and error message
+     */
     @Override
     public Message validate(Contract contr) {
         if(contr.getClient().getDateofBirth().isAfter(LocalDate.now())){

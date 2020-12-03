@@ -8,6 +8,12 @@ import java.util.logging.Logger;
 
 public class MinGBSmsCellurarValidator implements Validator {
 
+    /**
+     * Method checks the number of SMS, minutes and gigabytes of the CellularContract for correctness.
+     *
+     * @param contr - verifiable contract
+     * @return - verification result message with verification status and error message
+     */
     @Override
     public Message validate(Contract contr) {
         String err = "";

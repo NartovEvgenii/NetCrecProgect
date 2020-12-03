@@ -14,9 +14,9 @@ public class MaxSpeedInternetValidator implements Validator {
     public Message validate(Contract contr) {
         try {
             Method method = contr.getClass().getMethod("getMaxSpeed");
-            return ((int) method.invoke(contr) < 0)?
+            return ((double) method.invoke(contr) < 0)?
                 new Message(CheckStatus.RedRisk,"maximum internet speed is less than 0"):
-                ((int) method.invoke(contr) < 30)? 
+                ((double) method.invoke(contr) < 30)? 
                     new Message(CheckStatus.Error,"maximum internet speed is less than 30"):
                     new Message(CheckStatus.OK,""); 
             

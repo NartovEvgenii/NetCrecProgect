@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import validators.ContractValidator;
+import validators.Message;
 
 public class ContactCSVReader {
 
@@ -35,7 +37,11 @@ public class ContactCSVReader {
                 LocalDate endDate = getDateOfString(nextRow[2]);
                 int numb_contr = Integer.parseInt(nextRow[3]);
                 Client cli = getClientOfString(nextRow,contrStore);
-                contrStore.addContract(builtContract(nextRow, id, startDate, endDate, numb_contr, cli));                
+                Contract add_contr = builtContract(nextRow, id, startDate, endDate, numb_contr, cli);
+                ContractValidator valid = new ContractValidator();
+                Message mess = valid.validate(add_contr);
+                System.out.print(mess.getStatus());
+                contrStore.addContract(add_contr);                
             }
         }
 

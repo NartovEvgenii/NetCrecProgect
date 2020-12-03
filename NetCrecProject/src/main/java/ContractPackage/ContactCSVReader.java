@@ -40,8 +40,11 @@ public class ContactCSVReader {
                 Contract add_contr = builtContract(nextRow, id, startDate, endDate, numb_contr, cli);
                 ContractValidator valid = new ContractValidator();
                 Message mess = valid.validate(add_contr);
-                System.out.print(mess.getStatus());
-                contrStore.addContract(add_contr);                
+                if(mess.getStatus().equals(Message.CheckStatus.OK)){
+                    contrStore.addContract(add_contr);  
+                }else{
+                    System.out.print(mess.getErrorMessage()); 
+                }
             }
         }
 
@@ -77,8 +80,8 @@ public class ContactCSVReader {
         String patronymic = nextRow[7];
         LocalDate dateofBirth = getDateOfString(nextRow[8]);
         Gender gender = Gender.valueOf(nextRow[9]);
-        int passportNum = Integer.parseInt(nextRow[10]);
-        int passportSerial = Integer.parseInt(nextRow[11]);
+        int passportSerial = Integer.parseInt(nextRow[10]);
+        int passportNum = Integer.parseInt(nextRow[11]);        
         return new Client(id, name, surname, patronymic, dateofBirth, gender, passportNum, passportSerial);
     }
 

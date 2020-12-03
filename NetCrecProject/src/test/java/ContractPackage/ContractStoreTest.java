@@ -144,15 +144,5 @@ public class ContractStoreTest {
         instance.addContractsFromCSV(csvFile);        
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
-    }  
-    
-    @Test
-    public void testDefsgdhgdh() throws IOException, CsvValidationException {        
-        Client cli = new Client(1, "Ivan", "Ivanov", "Ivanovich", LocalDate.of(1984, 7, 28), Gender.Male, 1, 1);
-        Contract contr = new CellularContract(1, LocalDate.of(2010, 7, 28), LocalDate.of(2040, 7, 28), 1, cli, 1, 1, 1);
-        System.out.println(contr.getClass().getSimpleName());
-        System.out.println(contr.getClass().getSuperclass().getSimpleName());
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     } 
 }

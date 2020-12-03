@@ -21,13 +21,13 @@ public class ContractValidator implements Validator {
     @Override
     public Message validate(Contract contr) {
         Message res = new Message(Message.CheckStatus.OK,"");
-        for(Validator val : validators){
+        for(Validator val : validators){   
             if(contr.getClass().getSimpleName().equals(val.getClassValidate()) || 
                 contr.getClass().getSuperclass().getSimpleName().equals(val.getClassValidate())){
-                Message mess = val.validate(contr);
-                if(mess.getStatus() != Message.CheckStatus.OK){
-                    if(res.getStatus() != Message.CheckStatus.RedRisk){
-                        if(mess.getStatus() == Message.CheckStatus.Error){
+                Message mess = val.validate(contr);                
+                if(!mess.getStatus().equals(Message.CheckStatus.OK)){
+                    if(!res.getStatus().equals(Message.CheckStatus.RedRisk)){
+                        if(!mess.getStatus().equals(Message.CheckStatus.Error)){
                             res.setStatus(Message.CheckStatus.Error);
                         }else{
                             res.setStatus(Message.CheckStatus.RedRisk);

@@ -1,6 +1,5 @@
 package ContractPackage;
 
-import ContractPackage.ValidatContract.CheckStatus;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.IOException;
@@ -31,30 +30,12 @@ public class ContactCSVReader {
             String[] nextRow;
             csvReader.readNext();
             while ((nextRow = csvReader.readNext()) != null) {
-                ValidatContract valid = new ValidatContract(); 
-                try {
-                    valid.contractValidate(nextRow);
-                    if(valid.getStatus() == CheckStatus.OK){
-                        int id = Integer.parseInt(nextRow[0]);
-                        LocalDate startDate = getDateOfString(nextRow[1]);
-                        LocalDate endDate = getDateOfString(nextRow[2]);
-                        int numb_contr = Integer.parseInt(nextRow[3]);
-                        Client cli = getClientOfString(nextRow,contrStore);
-                        contrStore.addContract(builtContract(nextRow, id, startDate, endDate, numb_contr, cli));
-                    }else if (valid.getStatus() == CheckStatus.Error){
-                        System.out.println(valid.getErrorMessage());
-                        int id = Integer.parseInt(nextRow[0]);
-                        LocalDate startDate = getDateOfString(nextRow[1]);
-                        LocalDate endDate = getDateOfString(nextRow[2]);
-                        int numb_contr = Integer.parseInt(nextRow[3]);
-                        Client cli = getClientOfString(nextRow,contrStore);
-                        contrStore.addContract(new Contract(id,startDate,endDate,numb_contr,cli));
-                    }else{
-                        System.out.println(valid.getErrorMessage());
-                    }
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ContactCSVReader.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                int id = Integer.parseInt(nextRow[0]);
+                LocalDate startDate = getDateOfString(nextRow[1]);
+                LocalDate endDate = getDateOfString(nextRow[2]);
+                int numb_contr = Integer.parseInt(nextRow[3]);
+                Client cli = getClientOfString(nextRow,contrStore);
+                contrStore.addContract(builtContract(nextRow, id, startDate, endDate, numb_contr, cli));                
             }
         }
 

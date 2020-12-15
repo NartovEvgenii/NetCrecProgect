@@ -1,6 +1,6 @@
 package ContractPackage;
 
-import SortedPackage.BubbleSorter;
+import sortedPackage1.BubbleSorter;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Comparator;

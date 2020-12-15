@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -94,7 +95,7 @@ public class ContractStoreTest {
      * Test of getColCoctr method, of class ContractStore.
      */
     @Test
-    public void testGetColCoctr() {
+    public void testGetColCoctr(){
         System.out.println("getColCoctr");
         ContractStore instance = new ContractStore();
         int expResult = 1;
@@ -120,6 +121,8 @@ public class ContractStoreTest {
             Contract contr = new Contract(masIndex[i], LocalDate.of(2010, 7, 28), LocalDate.of(2040, 7, 28), 1, cli);
             instance.addContract(contr);
         }
+        Comparator<Contract> comp = (Contract o1, Contract o2) -> o1.getId() - o2.getId();
+        instance.sortBy(comp);
         Predicate<Contract> checkID = contr -> contr.getId() >= 10;
         ContractStore mas = instance.findBy(checkID);
         for (int i = 0; i < 5; i++) {

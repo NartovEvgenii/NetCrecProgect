@@ -1,6 +1,7 @@
-package SortedPackage;
+package sortedPackage1;
 
 import ContractPackage.Contract;
+import SortedPackage.ISorted;
 import static SortedPackage.ISorted.checkCompWithNull;
 import java.util.Comparator;
 
@@ -23,6 +24,7 @@ public class BubbleSorter implements ISorted {
                 }
             }
         }
+        System.out.print("------------------------buble---------------");
     }
     
 

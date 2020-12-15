@@ -1,22 +1,30 @@
 package ContractPackage;
 
 import SortedPackage.ISorted;
-import SortedPackage.SelectionSorter;
 import com.opencsv.exceptions.CsvValidationException;
+import injectPackage.MyInject;
+import injectPackage.MyInjector;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ContractStore {
 
     private Contract[] masContracts;
     private int colContr;
-    ISorted metSort = new SelectionSorter();
+    @MyInject(clazz = ISorted.class)
+    ISorted metSort;
     ContactCSVReader readerCSV = new ContactCSVReader();
 
-    public ContractStore() {
+    public ContractStore(){
+        try { 
+            MyInjector.injectorValidateAndCreate(this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         masContracts = new Contract[100];
         colContr = 0;
     }
@@ -132,7 +140,7 @@ public class ContractStore {
      * @param pred - contract sorting option
      * @return - store of contracts
      */
-    public ContractStore findBy(Predicate<Contract> pred) {
+    public ContractStore findBy(Predicate<Contract> pred){
         ContractStore result = new ContractStore();
         for (int i = 0; i < colContr; i++) {
             if (pred.test(masContracts[i])) {

@@ -25,6 +25,7 @@ public class SelectionSorter implements ISorted {
             masContracts[min] = masContracts[i];
             masContracts[i] = temp;
         }
+        System.out.print("sellll--------------------------------------");
     }
 
 }

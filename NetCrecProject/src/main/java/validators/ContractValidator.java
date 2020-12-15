@@ -1,13 +1,18 @@
 package validators;
 
 import ContractPackage.Contract;
+import injectPackage.MyInject;
+import injectPackage.MyInjector;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ContractValidator implements Validator {
     
-    static List<Validator> validators =new ArrayList();
-    static {
+    @MyInject
+    List<Validator> validators;
+    /*static {        
         validators.add(new NumberContractValidator());
         validators.add(new DateContractValidator());
         validators.add(new FioClientValidator());
@@ -16,7 +21,15 @@ public class ContractValidator implements Validator {
         validators.add(new MinGBSmsCellurarValidator());
         validators.add(new MaxSpeedInternetValidator());
         validators.add(new ChannelPackageValidator());              
+    }*/
+    {
+        try { 
+            MyInjector.injectorValidateAndCreate(this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
+    
 
     /**
      * Method checks the contract for data correctness.

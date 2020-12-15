@@ -15,16 +15,20 @@ public class ContractStore {
 
     private Contract[] masContracts;
     private int colContr;
-    @MyInject(clazz = ISorted.class)
+    
+    @MyInject
     ISorted metSort;
     ContactCSVReader readerCSV = new ContactCSVReader();
 
-    public ContractStore(){
+    {
         try { 
             MyInjector.injectorValidateAndCreate(this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+    
+    public ContractStore(){
         masContracts = new Contract[100];
         colContr = 0;
     }

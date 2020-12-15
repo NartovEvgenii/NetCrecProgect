@@ -24,8 +24,6 @@ public class BubbleSorter implements ISorted {
                 }
             }
         }
-        System.out.print("------------------------buble---------------");
     }
     
-
 }

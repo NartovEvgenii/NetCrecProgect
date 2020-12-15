@@ -1,18 +1,21 @@
 package injectPackage;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static javafx.scene.input.KeyCode.T;
 
 @Configuration(packages = {"validators", "SortedPackage"})
 public class MyInjector {
 
+    /**
+     * Method fills in the fields in the passed repository with the @MyInject annotation.
+     * Packages for the searched classes are taken from the configuration of the class itself.
+     * @param reposit - repository in filling fields
+     * @throws java.lang.Exception
+     */
     public static void injectorValidateAndCreate(Object reposit) throws Exception {
         Configuration annot_pack = MyInjector.class.getAnnotation(Configuration.class);
         String[] packages = annot_pack.packages();
@@ -47,6 +50,16 @@ public class MyInjector {
         }
     }
 
+    /**
+     * Method returns a list of classes that are in the passed packages, 
+     * that implement or extend from the passed class for find 
+     * and not equals to the repository object
+     * 
+     * @param packages - class search packages
+     * @param class_for_find - an implementing or executable class
+     * @param reposit - repository to exclude from search
+     * @return  - list of found classes
+     */
     public static final List<Class> getAllClassesWithFilter(String[] packages, Class class_for_find, Object reposit) {
         List<Class> found_classes = new ArrayList();
         for (String pack : packages) {
@@ -55,7 +68,6 @@ public class MyInjector {
                 try {
                     if (class_for_find.isAssignableFrom(cl) && !cl.equals(reposit.getClass()) && !cl.isInterface()
                             && cl.newInstance() != null) {
-                        System.out.println(cl.getName());
                         found_classes.add(cl);
                     }
                 } catch (InstantiationException | IllegalAccessException ex) {
@@ -66,6 +78,11 @@ public class MyInjector {
         return found_classes;
     }
 
+    /**
+     * Method returns the list of classes located in the input folder
+     * @param packageName - file to search
+     * @return  - list of found classes
+     */
     public static final List<Class<?>> getAllClassesInPackage(String packageName) {
         String path = packageName.replaceAll("\\.", File.separator);
         List<Class<?>> classes = new ArrayList<>();

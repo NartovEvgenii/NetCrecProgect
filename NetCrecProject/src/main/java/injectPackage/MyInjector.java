@@ -14,37 +14,43 @@ public class MyInjector {
      * Method fills in the fields in the passed repository with the @MyInject annotation.
      * Packages for the searched classes are taken from the configuration of the class itself.
      * @param reposit - repository in filling fields
-     * @throws java.lang.Exception
+     * @throws injectPackage.InjectException
      */
-    public static void injectorValidateAndCreate(Object reposit) throws Exception {
+    public static void injectorValidateAndCreate(Object reposit) throws InjectException {
         Configuration annot_pack = MyInjector.class.getAnnotation(Configuration.class);
         String[] packages = annot_pack.packages();
-        Field[] fields = reposit.getClass().getDeclaredFields();
-        for (Field field : fields) {
+        Field[] fields = reposit.getClass().getDeclaredFields();         
+        for (Field field : fields) {            
             if (field.isAnnotationPresent(MyInject.class)) {
-                if (List.class.isAssignableFrom(field.getType())) {
-                    String pod_type = field.getGenericType().getTypeName().split("<")[1].replace(">", "");
-                    Class class_for_find = Class.forName(pod_type);
-                    List<Class> found_classes = getAllClassesWithFilter(packages, class_for_find, reposit);
-                    if (found_classes.size() >= 1) {
-                        List<Object> res_lis = new ArrayList<>();
-                        for (Class clas_l : found_classes) {
-                            res_lis.add(clas_l.newInstance());
+                try {
+                    if (List.class.isAssignableFrom(field.getType())) {
+                        String pod_type = field.getGenericType().getTypeName().split("<")[1].replace(">", "");
+                        Class class_for_find = Class.forName(pod_type);
+                        List<Class> found_classes = getAllClassesWithFilter(packages, class_for_find, reposit);
+                        if (found_classes.size() >= 1) {
+                            List<Object> res_lis = new ArrayList<>();
+                            for (Class clas_l : found_classes) {
+                                res_lis.add(clas_l.newInstance());
+                            }
+                            field.setAccessible(true);
+                            field.set(reposit, res_lis);
+                            Logger.getLogger(MyInjector.class.getName()).log(Level.INFO, "Field with name {0} in class {1} is filled.", new Object[]{field.getName(), reposit.getClass().getName()});
+                        } else {
+                            throw new InjectException("Class type cannot be uniquely determined!");
                         }
-                        field.setAccessible(true);
-                        field.set(reposit, res_lis);
                     } else {
-                        throw new Exception("Class type cannot be uniquely determined!");
+                        Class class_for_find = field.getType();
+                        List<Class> found_classes = getAllClassesWithFilter(packages, class_for_find, reposit);
+                        if (found_classes.size() == 1) {
+                            field.setAccessible(true);
+                            field.set(reposit, found_classes.get(0).newInstance());
+                            Logger.getLogger(MyInjector.class.getName()).log(Level.INFO, "Field with name {0} in class {1} is filled.", new Object[]{field.getName(), reposit.getClass().getName()});
+                        } else {
+                            throw new InjectException("Class type cannot be uniquely determined!");
+                        }
                     }
-                } else {
-                    Class class_for_find = field.getType();
-                    List<Class> found_classes = getAllClassesWithFilter(packages, class_for_find, reposit);
-                    if (found_classes.size() == 1) {
-                        field.setAccessible(true);
-                        field.set(reposit, found_classes.get(0).newInstance());
-                    } else {
-                        throw new Exception("Class type cannot be uniquely determined!");
-                    }
+                } catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | InstantiationException | SecurityException ex) {
+                    throw new InjectException(ex.getMessage());
                 }
             }
         }
